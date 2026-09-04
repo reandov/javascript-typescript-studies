@@ -1,0 +1,9 @@
+{
+  "name": "javascript-typescript-studies",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JavaScript and TypeScript studies, algorithms, and data structures.",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
