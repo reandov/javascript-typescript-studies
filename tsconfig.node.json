@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"]
+  },
+  "include": [
+    "studies/**/*.ts",
+    "practice/**/*.ts",
+    "problems/**/*.ts",
+    "algorithms/**/*.ts",
+    "data-structures/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": ["node_modules", "projects", "**/dist"]
+}

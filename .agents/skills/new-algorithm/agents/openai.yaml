@@ -1,0 +1,4 @@
+interface:
+  display_name: "New Algorithm"
+  short_description: "Scaffold DSA algorithm studies"
+  default_prompt: "Use $new-algorithm to scaffold an algorithm study topic in this repository."

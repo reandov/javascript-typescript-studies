@@ -1,0 +1,4 @@
+interface:
+  display_name: "Problem Understanding"
+  short_description: "Analyze coding problems without giving code"
+  default_prompt: "Use $problem-understanding to help me understand this coding problem without giving me code."

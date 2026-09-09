@@ -1,0 +1,4 @@
+interface:
+  display_name: "New Data Structure"
+  short_description: "Scaffold DSA structure studies"
+  default_prompt: "Use $new-data-structure to scaffold a data-structure study topic in this repository."

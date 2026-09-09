@@ -7,6 +7,10 @@ build/
 coverage/
 *.tsbuildinfo
 
+# Disposable local experiments
+playground/*
+!playground/README.md
+
 # Local environment files
 .env
 .env.*

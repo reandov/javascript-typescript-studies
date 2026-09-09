@@ -1,0 +1,4 @@
+interface:
+  display_name: "Custom Problem"
+  short_description: "Create and refine custom coding problems"
+  default_prompt: "Use $custom-problem to create a custom coding problem from this prompt."
