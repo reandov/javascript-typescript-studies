@@ -1,20 +1,30 @@
 {
-  "name": "javascript-typescript-studies",
+  "name": "typescript-studies",
   "version": "1.0.0",
   "private": true,
-  "description": "JavaScript and TypeScript studies, algorithms, and data structures.",
+  "description": "TypeScript studies, practice, problems, algorithms, data structures, and small projects.",
+  "workspaces": [
+    "projects/*"
+  ],
+  "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "check": "tsc --noEmit",
+    "build": "npm run build --workspaces --if-present",
+    "check": "tsc -p tsconfig.node.json --noEmit && npm run check --workspaces --if-present",
+    "clean": "rm -rf coverage dist *.tsbuildinfo && npm run clean --workspaces --if-present",
+    "example": "tsx",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
+    "fetch-leetcode": "tsx scripts/fetch-leetcode-question.ts",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "run": "tsx",
-    "solve": "tsx",
-    "test": "tsx --test \"**/*.spec.ts\"",
-    "test:watch": "tsx --test --watch \"**/*.spec.ts\"",
-    "clean": "rm -rf dist build coverage *.tsbuildinfo"
+    "new-algorithm": "tsx scripts/new-algorithm.ts",
+    "new-custom-problem": "tsx scripts/new-custom-problem.ts",
+    "new-data-structure": "tsx scripts/new-data-structure.ts",
+    "new-leetcode": "tsx scripts/new-problem.ts",
+    "new-problem": "tsx scripts/new-problem.ts",
+    "new-theory": "tsx scripts/new-theory.ts",
+    "test": "tsx --test \"{algorithms,data-structures,problems}/**/*.test.ts\" && npm run test --workspaces --if-present",
+    "test:watch": "tsx --test --watch \"{algorithms,data-structures,problems}/**/*.test.ts\""
   },
   "devDependencies": {
     "@types/node": "^26.0.1",

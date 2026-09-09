@@ -1,0 +1,4 @@
+interface:
+  display_name: "Theory Note"
+  short_description: "Create practical DSA study notes"
+  default_prompt: "Use $theory-note to create a practical DSA theory note in this repository."
