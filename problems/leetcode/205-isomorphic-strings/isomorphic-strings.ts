@@ -30,7 +30,7 @@ export function isIsomorphic(s: string, t: string): boolean {
     targetToSource.set(target, source);
   }
 
-  // If we don't hit true for the if statement above, means that the string s
+  // If we don't hit false for the if statement above, means that the string s
   // can be successfully mapped to t.
   return true;
 }
