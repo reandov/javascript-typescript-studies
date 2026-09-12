@@ -37,13 +37,14 @@ Do not introduce a new top-level category when an existing one accurately descri
 - Name a runnable demonstration `example.ts` when it is separate from reusable code.
 - Add `index.ts` only when a directory exposes a meaningful public API; do not create barrel files by default.
 - Separate reusable modules from demonstrations and UI wiring. Importing reusable code should not unexpectedly run a demo.
-- Problem documentation should state the problem, examples, constraints, edge cases, and complexity.
+- Problem documentation should state the problem, examples, constraints, and edge cases. Keep time and space complexity with each solution.
 - Algorithm and data-structure documentation should describe the contract, invariants where relevant, and time and space complexity.
 - Update nearby README files and relative links whenever files move or public usage changes.
 
 For coding problems:
 
-- Keep LeetCode problems under `problems/leetcode/<slug>/` and custom interview problems under `problems/custom/<slug>/`.
+- Keep LeetCode problems under `problems/leetcode/<number>-<slug>/`, using the official public problem number. Keep their statement in `description.md` and TypeScript filenames based on the canonical slug. Keep custom interview problems under `problems/custom/<slug>/`.
+- Keep LeetCode descriptions focused on the problem, without local solution notes or complexity sections. Put `// Time complexity: ...` and `// Space complexity: ...` immediately above the exported solution function or class; use TODO values for unimplemented scaffolds.
 - Keep one exported solution function or class per implementation unless a small helper type naturally belongs beside it.
 - Use `node:test` and `node:assert/strict`; cover canonical examples and meaningful edge cases.
 - Prefer self-contained solutions unless a shared helper materially improves clarity.
@@ -64,7 +65,7 @@ Run commands from the repository root unless a task specifically requires otherw
 ```bash
 npm install
 npm run example -- path/to/example.ts
-npm run new-leetcode -- "Problem Name"
+npm run new-leetcode -- "https://leetcode.com/problems/two-sum/"
 npm run new-custom-problem -- "Custom Problem Name"
 npm run new-algorithm -- "Algorithm Name"
 npm run new-data-structure -- "Data Structure Name"

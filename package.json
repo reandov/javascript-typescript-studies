@@ -23,14 +23,16 @@
     "new-leetcode": "tsx scripts/new-problem.ts",
     "new-problem": "tsx scripts/new-problem.ts",
     "new-theory": "tsx scripts/new-theory.ts",
-    "test": "tsx --test \"{algorithms,data-structures,problems}/**/*.test.ts\" && npm run test --workspaces --if-present",
-    "test:watch": "tsx --test --watch \"{algorithms,data-structures,problems}/**/*.test.ts\""
+    "test": "tsx --test \"{algorithms,data-structures,problems,scripts}/**/*.test.ts\" && npm run test --workspaces --if-present",
+    "test:watch": "tsx --test --watch \"{algorithms,data-structures,problems,scripts}/**/*.test.ts\""
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
+    "@types/turndown": "^5.0.6",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
     "tsx": "^4.22.4",
+    "turndown": "^7.2.4",
     "typescript": "^6.0.3"
   }
 }

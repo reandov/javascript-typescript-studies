@@ -47,12 +47,17 @@ npm run fmt:check
 Scaffold new DSA material:
 
 ```bash
-npm run new-leetcode -- "Problem Name"
+npm run new-leetcode -- "https://leetcode.com/problems/two-sum/"
 npm run new-custom-problem -- "Custom Problem Name"
 npm run new-algorithm -- "Algorithm Name"
 npm run new-data-structure -- "Data Structure Name"
 npm run new-theory -- "Topic Name"
 ```
+
+The LeetCode scaffold fetches the official problem number and statement, creates
+`problems/leetcode/<number>-<slug>/description.md`, and adds generic TypeScript
+source and test stubs. It also accepts a problem title or slug. Use the
+`new-problem` skill to fill in the official signature and executable test cases.
 
 Run a project script by selecting its workspace:
 
