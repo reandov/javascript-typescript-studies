@@ -1,6 +1,6 @@
 ---
 name: new-problem
-description: Scaffold a LeetCode problem in this DSA TypeScript repository from its problem URL. Use when the user invokes `/new-problem` or `$new-problem` with a LeetCode URL, supplies a LeetCode problem URL to prepare for solving, or asks to create a correctly named TypeScript solution stub and executable tests under problems/leetcode without implementing the algorithm.
+description: Scaffold a numbered LeetCode problem folder with description.md, a TypeScript solution stub, and executable tests from an official problem URL. Use when the user invokes `/new-problem` or `$new-problem`, supplies a LeetCode URL to prepare for solving, or asks to scaffold a LeetCode problem without implementing the algorithm.
 ---
 
 # New Problem
@@ -21,8 +21,7 @@ placeholder so the user can use test-driven development.
    - Read `AGENTS.md`, `package.json`, `scripts/new-problem.ts`, and one recent
      problem and test pair.
    - Check `git status` and preserve unrelated work.
-   - Stop if `problems/leetcode/<slug>/` already exists; report its path
-     instead of overwriting it.
+   - Preserve existing problems, including legacy folders named only by slug.
 
 3. Fetch official problem metadata.
    - Run:
@@ -32,37 +31,55 @@ placeholder so the user can use test-driven development.
      ```
 
    - The helper validates the URL and queries LeetCode's official GraphQL API
-     for the canonical slug, title, TypeScript starter, example test cases, and
-     statement HTML.
-   - Use the statement HTML only to identify example outputs and constraints.
+     for the canonical slug, title, public problem number (`frontendId`),
+     TypeScript starter, example test cases, and statement HTML.
+   - Use `frontendId`, not the internal `questionId`, in folder names.
+   - Use the statement HTML to generate `description.md` and identify example
+     outputs and constraints.
    - If the API is unavailable, fetch the canonical official problem page as a
      fallback. Do not use third-party copies for the function signature.
-   - Extract the canonical slug, title, TypeScript starter signature, parameter
-     names and types, return type, examples, and constraints.
+   - Extract the public number, canonical slug, title, TypeScript starter
+     signature, parameter names and types, return type, examples, and constraints.
    - Do not infer a signature from the title when official TypeScript starter
      code is available.
-   - Do not copy editorials, solution code, or the full problem statement.
+   - Keep the description grounded in the official statement. Do not include
+     editorials, solution code, or algorithm hints.
    - If neither official source can be fetched, report the blocker rather than
      generating a potentially incorrect API.
 
 4. Generate the initial files.
-   - Run `npm run new-leetcode -- "<canonical slug>"`.
+   - Stop if `problems/leetcode/<number>-<slug>/`, a numbered folder with the same
+     slug, or legacy `problems/leetcode/<slug>/` already exists; report its path.
+   - Run `npm run new-leetcode -- "<canonical URL>"`. The script fetches official
+     metadata, creates the numbered folder, and converts the statement HTML to
+     Markdown, preserving examples, constraints, links, and images.
    - Keep the repository convention:
 
      ```text
-     problems/leetcode/<slug>/<slug>.ts
-     problems/leetcode/<slug>/<slug>.test.ts
+     problems/leetcode/<number>-<slug>/description.md
+     problems/leetcode/<number>-<slug>/<slug>.ts
+     problems/leetcode/<number>-<slug>/<slug>.test.ts
      ```
 
    - Do not introduce `index.ts`.
+   - If the GraphQL helper failed but the official page supplied all required
+     metadata, create these files directly without overwriting an existing folder.
 
 5. Replace the generic source stub.
    - Rename the exported function to the official TypeScript starter function.
    - Reproduce its parameter names, parameter types, and return type.
    - Add only the minimal local or shared type definitions required to compile.
    - Reuse existing tree utilities and types when applicable.
-   - Add concise JSDoc containing the official title, a paraphrased objective,
-     and `TODO` markers for the approach and complexity.
+   - Keep the problem explanation in `description.md`, outside the function.
+     Do not add local solution notes or complexity sections to that document.
+   - Put these two comments immediately above the exported function or class;
+     leave the values as TODO until the solution is implemented:
+
+     ```ts
+     // Time complexity: TODO
+     // Space complexity: TODO
+     ```
+
    - Use this implementation body until the user codes the solution:
 
      ```ts
@@ -88,17 +105,26 @@ placeholder so the user can use test-driven development.
      placeholder implementation.
 
 7. Update documentation.
+   - Check that `description.md` has the official number, title, canonical source
+     link, objective, all examples, and constraints. Add a brief explanation of
+     ambiguous wording and meaningful edge cases supported by those constraints
+     when it helps understanding. Do not add cases outside the official contract.
    - Add the problem alphabetically to the Solved Problems table in
      `problems/leetcode/README.md`.
-   - Link to the local source file and canonical LeetCode URL.
+   - Use the title for alphabetical ordering, ignoring its numeric prefix.
+   - Link the numbered problem title to `description.md`, and include links to
+     the local source file and canonical LeetCode URL.
 
 8. Validate the scaffold.
+   - Format the new problem files and edited README with the repository's
+     formatter before checking them.
    - Run `npm run check`; it must pass.
    - Run the new test file directly with
-     `npx tsx --test problems/leetcode/<slug>/<slug>.test.ts`.
+     `npx tsx --test problems/leetcode/<number>-<slug>/<slug>.test.ts`.
    - Confirm failures come from `Error: Not implemented`. Treat that expected
      red state as successful scaffold validation.
    - Run `git diff --check`.
+   - Run `npm run lint` and `npm run fmt:check`; they must pass.
    - Do not run the complete suite while the intentional failing tests exist.
 
 9. Report the result.

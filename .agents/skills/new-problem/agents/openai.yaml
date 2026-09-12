@@ -1,4 +1,4 @@
 interface:
   display_name: "New LeetCode Problem"
-  short_description: "Scaffold a tested LeetCode problem from its URL"
-  default_prompt: "Use $new-problem to scaffold a LeetCode problem from the supplied URL."
+  short_description: "Create numbered LeetCode scaffolds with descriptions and tests"
+  default_prompt: "Use $new-problem to scaffold a numbered LeetCode problem folder with description.md and tests from the supplied URL."
