@@ -26,3 +26,11 @@ npm run new-data-structure -- "Data Structure Name"
 - [`treeToArray`](./tree/tree-to-array/tree-to-array.ts) converts a binary tree into a trimmed level-order array.
 
 These helpers are shared by tree problem tests, so changes require focused utility tests and the complete problem test suite.
+
+## Shared graph helpers
+
+- [`GraphNode` and `buildGraph`](./graph/adjacency-list/build-graph.ts) represent and construct a graph from a LeetCode-style adjacency list.
+- [`graphToAdjacencyList`](./graph/adjacency-list/graph-to-adjacency-list.ts) converts a connected graph back to that adjacency-list format.
+
+The graph helpers require unique consecutive node values beginning at `1` and
+handle cycles by tracking node references during traversal.
