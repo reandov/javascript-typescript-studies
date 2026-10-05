@@ -1,75 +1,58 @@
 // Time complexity: O(m * n), where m is grid.length and n is grid[0].length
 // Space complexity: O(m * n) for the BFS queue in the worst case
 export function orangesRotting(grid: number[][]): number {
-  // If grid is empty return -1
+  // Defensive guard; the problem constraints guarantee at least one row.
   if (grid.length === 0) return -1;
 
-  // Number of rows and columns
-  const nRows = grid.length;
-  const nCols = grid[0].length;
+  const rows = grid.length;
+  const cols = grid[0].length;
 
-  // fresh oranges counter
-  let freshOrangesCount = 0;
-
-  // initial queue where we map rotten orange positions and count fresh oranges
-  const queue: number[][] = [];
-
-  for (let row = 0; row < nRows; row++) {
-    for (let col = 0; col < nCols; col++) {
-      if (grid[row][col] === 0) continue;
-
-      if (grid[row][col] === 1) {
-        freshOrangesCount++;
-        continue;
-      }
-
-      if (grid[row][col] === 2) {
-        queue.push([row, col]);
-      }
-    }
-  }
-
-  if (freshOrangesCount === 0) return 0;
-
-  // directions
+  // Each entry stores the row, column, and minute when the orange rotted.
+  const queue: [number, number, number][] = [];
   const directions = [
-    [-1, 0],
     [1, 0],
-    [0, -1],
+    [-1, 0],
     [0, 1],
+    [0, -1],
   ] as const;
 
-  // elapsed time between each contamination step
-  let elapsedTime = 0;
-
+  let fresh = 0;
   let head = 0;
+  let minutes = 0;
 
-  while (head < queue.length && freshOrangesCount > 0) {
-    const levelEnd = queue.length;
-    let rottedThisMinute = false;
-
-    while (head < levelEnd) {
-      const [row, col] = queue[head++];
-
-      for (const [rowOffset, colOffset] of directions) {
-        const nextRow = row + rowOffset;
-        const nextCol = col + colOffset;
-
-        const isInsideGrid = nextRow >= 0 && nextRow < nRows && nextCol >= 0 && nextCol < nCols;
-
-        if (isInsideGrid && grid[nextRow][nextCol] === 1) {
-          freshOrangesCount--;
-          grid[nextRow][nextCol] = 2;
-          queue.push([nextRow, nextCol]);
-          rottedThisMinute = true;
-        }
-      }
+  // Count fresh oranges and seed the multi-source BFS.
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (grid[row][col] === 1) fresh++;
+      if (grid[row][col] === 2) queue.push([row, col, 0]);
     }
-
-    if (rottedThisMinute) elapsedTime++;
   }
 
-  if (freshOrangesCount > 0) return -1;
+  // Process rotten oranges in the order they are reached.
+  while (head < queue.length) {
+    const [row, col, minute] = queue[head++];
+    minutes = Math.max(minutes, minute);
 
-  return elapsedTime;
+    for (const [rowOffset, colOffset] of directions) {
+      const nextRow = row + rowOffset;
+      const nextCol = col + colOffset;
+
+      // Only fresh orthogonal neighbors can be reached by the rot.
+      if (
+        nextRow >= 0 &&
+        nextRow < rows &&
+        nextCol >= 0 &&
+        nextCol < cols &&
+        grid[nextRow][nextCol] === 1
+      ) {
+        // Mark it immediately to avoid adding the same orange more than once.
+        grid[nextRow][nextCol] = 2;
+        fresh--;
+        queue.push([nextRow, nextCol, minute + 1]);
+      }
+    }
+  }
+
+  // Fresh oranges left after BFS cannot be reached by any rotten orange.
+  return fresh === 0 ? minutes : -1;
 }
