@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reset Solution"
+  short_description: "Clear a solution while preserving its API and tests"
+  default_prompt: "Use $reset-solution to reset the selected problem to an unimplemented TypeScript scaffold while preserving its API, prompt, and tests."
