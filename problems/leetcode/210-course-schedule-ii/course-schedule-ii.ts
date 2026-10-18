@@ -23,6 +23,9 @@ export function findOrder(numCourses: number, prerequisites: number[][]): number
     }
   }
 
+  // Returns early if the queue is empty
+  if (queue.length === 0) return [];
+
   // Order array used to track the order in which the nodes are processed
   const order = [];
 
