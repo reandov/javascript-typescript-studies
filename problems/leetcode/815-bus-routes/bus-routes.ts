@@ -5,74 +5,66 @@ export function numBusesToDestination(routes: number[][], source: number, target
   if (source === target) return 0;
 
   // Map each stop to the indices of all bus routes that visit it.
-  function buildStopToRoutes(routes: number[][]): Map<number, number[]> {
-    const stopToRoutes = new Map<number, number[]>();
+  const stopToRoutes = new Map<number, number[]>();
 
-    // Use route indices to distinguish buses from stop numbers.
-    for (let routeIndex = 0; routeIndex < routes.length; routeIndex++) {
-      // Register this route at every stop it visits.
-      for (const stop of routes[routeIndex]) {
-        // Reuse the stop's list, or create one for its first route.
-        const connectedRoutes = stopToRoutes.get(stop) ?? [];
+  // Use route indices to distinguish buses from stop numbers.
+  for (let route = 0; route < routes.length; route++) {
+    // Register this route at every stop it visits.
+    for (const stop of routes[route]) {
+      // Reuse the stop's list, or create one for its first route.
+      const buses = stopToRoutes.get(stop) ?? [];
 
-        // This bus can be boarded at this stop.
-        connectedRoutes.push(routeIndex);
+      // This bus can be boarded at this stop.
+      buses.push(route);
 
-        // Store the list so shared stops connect multiple routes.
-        stopToRoutes.set(stop, connectedRoutes);
-      }
+      // Store the list so shared stops connect multiple routes.
+      stopToRoutes.set(stop, buses);
     }
-
-    return stopToRoutes;
   }
 
-  // Each BFS level represents boarding one more bus.
-  let numberOfBuses = 0;
-
-  // Find buses available at a stop without searching every route again.
-  const stopToRoutes = buildStopToRoutes(routes);
-
-  // Enqueue each stop only once, when it is first reached with the fewest buses.
+  // Discover each stop only once, when it is first reached with the fewest buses.
   const visitedStops = new Set<number>([source]);
   // Scan each route only once: boarding it makes all its stops reachable.
-  const visitedRoutes = new Set<number>([]);
+  const visitedRoutes = new Set<number>();
 
-  // Start at source before boarding any bus. Advance head instead of shifting the array.
-  const queue = [source];
-  let head = 0;
+  // Start at source before boarding any bus.
+  let currentStops = [source];
+  // Each BFS level represents boarding one more bus.
+  let buses = 0;
 
-  while (head < queue.length) {
+  while (currentStops.length > 0) {
     // Board the next bus from each stop in the current frontier.
-    numberOfBuses++;
+    buses++;
 
-    // Freeze this level's size so newly queued stops wait until the next level.
-    const levelSize = queue.length - head;
+    // Keep newly reached stops separate so transfers wait until the next level.
+    const nextStops: number[] = [];
 
-    for (let i = 0; i < levelSize; i++) {
-      // Consume a stop reached using numberOfBuses - 1 buses.
-      const stop = queue[head++];
+    // These stops were reached using buses - 1 buses.
+    for (const stop of currentStops) {
+      // Look up buses serving this stop without searching every route again.
+      // A missing map entry means no bus is available here.
+      for (const route of stopToRoutes.get(stop) ?? []) {
+        // Boarding an explored route elsewhere cannot improve its reachable stops.
+        if (visitedRoutes.has(route)) continue;
+        visitedRoutes.add(route);
 
-      // Try every bus serving this stop; a missing map entry means none are available.
-      for (const route of stopToRoutes.get(stop)?.values() ?? []) {
-        if (!visitedRoutes.has(route)) {
-          // Boarding this route elsewhere later cannot improve its reachable stops.
-          visitedRoutes.add(route);
+        // Stay on this bus to reach any stop on its repeating route.
+        for (const nextStop of routes[route]) {
+          // BFS explores bus counts in order, so the first arrival is optimal.
+          if (nextStop === target) return buses;
+          // Previously discovered stops cannot offer a shorter path now.
+          if (visitedStops.has(nextStop)) continue;
 
-          // Stay on this bus to reach any stop on its repeating route.
-          for (const newStop of routes[route]) {
-            // BFS explores bus counts in order, so the first arrival is optimal.
-            if (newStop === target) return numberOfBuses;
-
-            if (!visitedStops.has(newStop)) {
-              // Save this stop as a possible transfer point for the next bus.
-              queue.push(newStop);
-              // Mark on enqueue to prevent duplicate entries from overlapping routes.
-              visitedStops.add(newStop);
-            }
-          }
+          // Mark before adding to prevent duplicates from overlapping routes.
+          visitedStops.add(nextStop);
+          // Save this stop as a possible transfer point for the next bus.
+          nextStops.push(nextStop);
         }
       }
     }
+
+    // Explore transfers from the newly reached stops in the next BFS level.
+    currentStops = nextStops;
   }
 
   // Every reachable stop and route was explored without finding the target.
