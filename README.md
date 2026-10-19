@@ -4,15 +4,16 @@ A purpose-first workspace for TypeScript language studies, deliberate practice, 
 
 ## Repository map
 
-| Area                                              | Purpose                                                      |
-| ------------------------------------------------- | ------------------------------------------------------------ |
-| [`studies/`](./studies/README.md)                 | Notes and focused examples that explain language concepts    |
-| [`practice/`](./practice/README.md)               | Informal drills without a formal problem statement           |
-| [`problems/`](./problems/README.md)               | Defined coding challenges with solutions and tests           |
-| [`algorithms/`](./algorithms/README.md)           | Reference implementations with complexity analysis and tests |
-| [`data-structures/`](./data-structures/README.md) | Reusable structures with documented behavior and tests       |
-| [`projects/`](./projects/README.md)               | Independently runnable browser or Node applications          |
-| [`playground/`](./playground/README.md)           | Disposable local experiments that are ignored by Git         |
+| Area                                                   | Purpose                                                      |
+| ------------------------------------------------------ | ------------------------------------------------------------ |
+| [`studies/`](./studies/README.md)                      | Notes and focused examples that explain language concepts    |
+| [`practice/`](./practice/README.md)                    | Informal drills without a formal problem statement           |
+| [`problems/`](./problems/README.md)                    | Defined coding challenges with solutions and tests           |
+| [`algorithms/`](./algorithms/README.md)                | Reference implementations with complexity analysis and tests |
+| [`data-structures/`](./data-structures/README.md)      | Reusable structures with documented behavior and tests       |
+| [`projects/`](./projects/README.md)                    | Independently runnable browser or Node applications          |
+| [`interviews/uber/UBER.md`](./interviews/uber/UBER.md) | Uber frontend interview priorities and preparation schedule  |
+| [`playground/`](./playground/README.md)                | Disposable local experiments that are ignored by Git         |
 
 The repository root owns shared formatting, linting, type-checking, and test tooling. Applications under `projects/` are npm workspaces and own their runtime-specific configuration.
 
