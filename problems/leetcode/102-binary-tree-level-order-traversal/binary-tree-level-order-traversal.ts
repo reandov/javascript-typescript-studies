@@ -13,10 +13,10 @@ export function levelOrder(root: TreeNode | null): number[][] {
   const queue: TreeNode[] = [root];
 
   // Track the index of the next unprocessed node in the queue
-  let front = 0;
+  let head = 0;
 
   // Continue while the queue contains unprocessed nodes
-  while (front < queue.length) {
+  while (head < queue.length) {
     // Capture the exclusive end index of this level before appending children
     // Children added below belong to the next level.
     const levelSize = queue.length;
@@ -25,9 +25,9 @@ export function levelOrder(root: TreeNode | null): number[][] {
     const level: number[] = [];
 
     // Process only the nodes before this level's captured end index
-    while (front < levelSize) {
+    while (head < levelSize) {
       // Read the next node and advance the queue index
-      const node = queue[front++];
+      const node = queue[head++];
 
       // Add the node's value to the current level
       level.push(node.val);
