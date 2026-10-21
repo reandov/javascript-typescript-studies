@@ -35,4 +35,10 @@ describe("buildTree", () => {
   it("returns null when the root value is null", () => {
     assert.equal(buildTree([null]), null);
   });
+  it("leaves an omitted right child empty", () => {
+    const root = buildTree([1, 2]);
+
+    assert.equal(root?.left?.val, 2);
+    assert.equal(root?.right, null);
+  });
 });
