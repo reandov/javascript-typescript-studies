@@ -21,6 +21,10 @@ DSA-focused study notes live under [`dsa/`](./dsa/):
 - [`dsa/theory/`](./dsa/theory/README.md) contains practical concept notes.
 - [`dsa/patterns/`](./dsa/patterns/README.md) contains recurring problem-solving patterns.
 
+Start the algorithm studies with the
+[pattern recognition guide](./dsa/patterns/recognition.md), then follow a topic's
+worked examples and runnable `example.ts`.
+
 Run any example from the repository root:
 
 ```bash
