@@ -20,6 +20,10 @@ Create a data-structure study with:
 npm run new-data-structure -- "Data Structure Name"
 ```
 
+## Shared linked-list helpers
+
+- [`DLLNode`](./linked-list/dll-node.ts) represents a numeric key-value entry with previous and next links. Its [notes](./linked-list/README.md) describe the contract and list invariants.
+
 ## Shared tree helpers
 
 - [`buildTree`](./tree/array-to-tree/build-tree/build-tree.ts) converts a level-order array with `null` placeholders into a binary tree. Its [notes](./tree/array-to-tree/README.md) explain the BFS queue and input format.
