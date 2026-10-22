@@ -5,19 +5,19 @@ export function longestConsecutive(nums: number[]): number {
   // check if a number exists in O(1) time complexity
   const numsSet = new Set(nums);
 
-  // We will iterate through the set and for each number, 
+  // We will iterate through the set and for each number,
   // we will check if it is the start of a sequence
   let maxLength = 0;
 
   // Then we start the loop to find the longest consecutive sequence
   for (const num of numsSet) {
-    // If the number is the start of a sequence, 
+    // If the number is the start of a sequence,
     // we will find the length of that sequence
     if (!numsSet.has(num - 1)) {
-      // If the number is the start of a sequence, 
+      // If the number is the start of a sequence,
       // we will find the length of that sequence
       let current = num;
-      
+
       // Variable to keep track of the length of the current sequence
       let length = 1;
 
