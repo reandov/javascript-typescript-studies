@@ -7,15 +7,16 @@ export function inorderTraversal(root: TreeNode | null): number[] {
 
   const values: number[] = [];
 
-  function inorder(root: TreeNode) {
-    if (root.left) inorder(root.left);
+  // Collect values using inorder DFS: left subtree, node, right subtree.
+  function dfs(node: TreeNode) {
+    if (node.left) dfs(node.left);
 
-    values.push(root.val);
+    values.push(node.val);
 
-    if (root.right) inorder(root.right);
+    if (node.right) dfs(node.right);
   }
 
-  inorder(root);
+  dfs(root);
 
   return values;
 }

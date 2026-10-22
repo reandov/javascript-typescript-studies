@@ -3,16 +3,16 @@
 export function twoSum(nums: number[], target: number): number[] {
   if (!nums.length) return [];
 
-  const hashMap = new Map<number, number>();
+  const indexByValue = new Map<number, number>();
 
   for (let index = 0; index < nums.length; index++) {
     const num = nums[index];
-    const sub = target - num;
+    const complement = target - num;
 
-    if (hashMap.has(sub)) {
-      return [hashMap.get(sub)!, index];
+    if (indexByValue.has(complement)) {
+      return [indexByValue.get(complement)!, index];
     } else {
-      hashMap.set(num, index);
+      indexByValue.set(num, index);
     }
   }
 

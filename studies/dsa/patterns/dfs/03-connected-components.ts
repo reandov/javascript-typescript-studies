@@ -11,13 +11,13 @@ export function countComponents(graph: readonly (readonly number[])[]): number {
   const visited = new Set<number>();
   let componentCount = 0;
 
-  function markComponent(node: number): void {
+  function dfs(node: number): void {
     // Mark membership in the current component before exploring its neighbors.
     visited.add(node);
 
     for (const neighbor of graph[node]) {
       if (!visited.has(neighbor)) {
-        markComponent(neighbor);
+        dfs(neighbor);
       }
     }
   }
@@ -31,7 +31,7 @@ export function countComponents(graph: readonly (readonly number[])[]): number {
 
     // An unseen node starts exactly one new component in this undirected graph.
     componentCount += 1;
-    markComponent(node);
+    dfs(node);
   }
 
   return componentCount;

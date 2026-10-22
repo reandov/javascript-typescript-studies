@@ -14,25 +14,25 @@ export function buildTreeBfs(values: readonly (number | null)[]): TreeNode | nul
 
   const root = new TreeNode(values[0]);
   const queue: TreeNode[] = [root];
-  let index = 1;
+  let valueIndex = 1;
 
   // Process parents in level order. A head index avoids shifting the array.
   for (let head = 0; head < queue.length; head++) {
     const node = queue[head];
 
     // Each existing parent consumes a left slot followed by a right slot.
-    if (index < values.length && values[index] !== null) {
-      node.left = new TreeNode(values[index]!);
+    if (valueIndex < values.length && values[valueIndex] !== null) {
+      node.left = new TreeNode(values[valueIndex]!);
       queue.push(node.left);
     }
-    index++;
+    valueIndex++;
 
     // Missing children consume a slot but are never added to the queue.
-    if (index < values.length && values[index] !== null) {
-      node.right = new TreeNode(values[index]!);
+    if (valueIndex < values.length && values[valueIndex] !== null) {
+      node.right = new TreeNode(values[valueIndex]!);
       queue.push(node.right);
     }
-    index++;
+    valueIndex++;
   }
 
   return root;

@@ -7,21 +7,21 @@
 
 export function countSubarraysWithSum(values: readonly number[], target: number): number {
   // One empty prefix lets a range beginning at index 0 contribute a match.
-  const frequency = new Map<number, number>([[0, 1]]);
+  const prefixFrequencies = new Map<number, number>([[0, 1]]);
 
-  let prefix = 0;
+  let runningSum = 0;
   let count = 0;
 
   for (const value of values) {
-    prefix += value;
+    runningSum += value;
 
     // current - earlier = target, so the earlier boundary must have this sum.
-    const neededPrefix = prefix - target;
+    const neededPrefix = runningSum - target;
     // Each occurrence is a different starting boundary for a qualifying subarray.
-    count += frequency.get(neededPrefix) ?? 0;
+    count += prefixFrequencies.get(neededPrefix) ?? 0;
 
     // Store after counting to avoid treating the current boundary as an empty range.
-    frequency.set(prefix, (frequency.get(prefix) ?? 0) + 1);
+    prefixFrequencies.set(runningSum, (prefixFrequencies.get(runningSum) ?? 0) + 1);
   }
 
   return count;

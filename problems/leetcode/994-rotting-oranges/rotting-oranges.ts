@@ -5,7 +5,7 @@ export function orangesRotting(grid: number[][]): number {
   if (grid.length === 0) return -1;
 
   const rows = grid.length;
-  const cols = grid[0].length;
+  const columns = grid[0].length;
 
   // Each entry stores the row, column, and minute when the orange rotted.
   const queue: [number, number, number][] = [];
@@ -22,33 +22,33 @@ export function orangesRotting(grid: number[][]): number {
 
   // Count fresh oranges and seed the multi-source BFS.
   for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (grid[row][col] === 1) fresh++;
-      if (grid[row][col] === 2) queue.push([row, col, 0]);
+    for (let column = 0; column < columns; column++) {
+      if (grid[row][column] === 1) fresh++;
+      if (grid[row][column] === 2) queue.push([row, column, 0]);
     }
   }
 
   // Process rotten oranges in the order they are reached.
   while (head < queue.length) {
-    const [row, col, minute] = queue[head++];
+    const [row, column, minute] = queue[head++];
     minutes = Math.max(minutes, minute);
 
-    for (const [rowOffset, colOffset] of directions) {
+    for (const [rowOffset, columnOffset] of directions) {
       const nextRow = row + rowOffset;
-      const nextCol = col + colOffset;
+      const nextColumn = column + columnOffset;
 
       // Only fresh orthogonal neighbors can be reached by the rot.
       if (
         nextRow >= 0 &&
         nextRow < rows &&
-        nextCol >= 0 &&
-        nextCol < cols &&
-        grid[nextRow][nextCol] === 1
+        nextColumn >= 0 &&
+        nextColumn < columns &&
+        grid[nextRow][nextColumn] === 1
       ) {
         // Mark it immediately to avoid adding the same orange more than once.
-        grid[nextRow][nextCol] = 2;
+        grid[nextRow][nextColumn] = 2;
         fresh--;
-        queue.push([nextRow, nextCol, minute + 1]);
+        queue.push([nextRow, nextColumn, minute + 1]);
       }
     }
   }

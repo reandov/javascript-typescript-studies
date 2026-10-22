@@ -10,12 +10,12 @@ export function treeToArray(root: TreeNode | null): (number | null)[] {
   if (!root) return [];
 
   const values: (number | null)[] = [];
-  const nodes: (TreeNode | null)[] = [root];
-  let index = 0;
+  const queue: (TreeNode | null)[] = [root];
+  let head = 0;
 
-  while (index < nodes.length) {
-    const node = nodes[index];
-    index += 1;
+  while (head < queue.length) {
+    const node = queue[head];
+    head += 1;
 
     if (!node) {
       values.push(null);
@@ -23,7 +23,7 @@ export function treeToArray(root: TreeNode | null): (number | null)[] {
     }
 
     values.push(node.val);
-    nodes.push(node.left, node.right);
+    queue.push(node.left, node.right);
   }
 
   while (values[values.length - 1] === null) {

@@ -3,22 +3,22 @@
 export function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {
   if (!wordList.includes(endWord)) return 0;
 
-  const neighbors = new Map<string, string[]>();
+  const wordsByPattern = new Map<string, string[]>();
   wordList = [beginWord, ...wordList];
 
   for (const word of wordList) {
     for (let cut = 0; cut < word.length; cut++) {
       const pattern = word.slice(0, cut) + "*" + word.slice(cut + 1);
-      neighbors.set(pattern, [...(neighbors.get(pattern) ?? []), word]);
+      wordsByPattern.set(pattern, [...(wordsByPattern.get(pattern) ?? []), word]);
     }
   }
 
-  const visit = new Set([beginWord]);
+  const visited = new Set([beginWord]);
 
   const queue = [beginWord];
   let head = 0;
 
-  let res = 1;
+  let sequenceLength = 1;
 
   while (head < queue.length) {
     const levelSize = queue.length - head;
@@ -26,21 +26,21 @@ export function ladderLength(beginWord: string, endWord: string, wordList: strin
     for (let i = 0; i < levelSize; i++) {
       const word = queue[head++];
 
-      if (word === endWord) return res;
+      if (word === endWord) return sequenceLength;
 
       for (let cut = 0; cut < word.length; cut++) {
         const pattern = word.slice(0, cut) + "*" + word.slice(cut + 1);
 
-        for (const neighborWord of neighbors.get(pattern)?.values() ?? []) {
-          if (!visit.has(neighborWord)) {
-            visit.add(neighborWord);
+        for (const neighborWord of wordsByPattern.get(pattern)?.values() ?? []) {
+          if (!visited.has(neighborWord)) {
+            visited.add(neighborWord);
             queue.push(neighborWord);
           }
         }
       }
     }
 
-    res += 1;
+    sequenceLength += 1;
   }
 
   return 0;

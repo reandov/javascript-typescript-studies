@@ -18,7 +18,8 @@ export function jobScheduling(startTime: number[], endTime: number[], profit: nu
   // Create memory
   const memo = new Map<number, number>();
 
-  function findMaxProfit(currentIndex: number): number {
+  // Return the best profit available from this job onward using memoized DFS.
+  function dfs(currentIndex: number): number {
     // Base case, if we hit the end of the jobs array, return 0
     if (currentIndex === jobs.length) return 0;
 
@@ -26,13 +27,13 @@ export function jobScheduling(startTime: number[], endTime: number[], profit: nu
     if (memo.has(currentIndex)) return memo.get(currentIndex) ?? 0;
 
     // Path A: if we skip
-    const skipProfit = findMaxProfit(currentIndex + 1);
+    const skipProfit = dfs(currentIndex + 1);
 
     // Path B: if we take, first we need to find the next possible job
     const nextValidIndex = binarySearchNextJob(currentIndex, jobs);
 
     // Path B: calculate the profit of taking
-    const takeProfit = jobs[currentIndex][2] + findMaxProfit(nextValidIndex);
+    const takeProfit = jobs[currentIndex][2] + dfs(nextValidIndex);
 
     // Decision: Skip or take?
     const bestProfit = Math.max(skipProfit, takeProfit);
@@ -43,7 +44,7 @@ export function jobScheduling(startTime: number[], endTime: number[], profit: nu
     return bestProfit;
   }
 
-  return findMaxProfit(0);
+  return dfs(0);
 }
 
 // Helper to find next valid job based on endTime
@@ -55,13 +56,13 @@ function binarySearchNextJob(currentIndex: number, jobs: number[][]) {
   let nextIndex = jobs.length;
 
   while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
+    const middle = Math.floor((left + right) / 2);
 
-    if (jobs[mid][0] >= currentEndTime) {
-      nextIndex = mid;
-      right = mid - 1;
+    if (jobs[middle][0] >= currentEndTime) {
+      nextIndex = middle;
+      right = middle - 1;
     } else {
-      left = mid + 1;
+      left = middle + 1;
     }
   }
 

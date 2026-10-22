@@ -15,11 +15,11 @@ export function graphToAdjacencyList(root: GraphNode | null): number[][] {
   const nodesByValue = new Map<number, GraphNode>();
   const visited = new Set<GraphNode>();
   const queue = [root];
-  let queueIndex = 0;
+  let head = 0;
 
-  while (queueIndex < queue.length) {
-    const node = queue[queueIndex];
-    queueIndex += 1;
+  while (head < queue.length) {
+    const node = queue[head];
+    head += 1;
 
     if (visited.has(node)) continue;
     visited.add(node);

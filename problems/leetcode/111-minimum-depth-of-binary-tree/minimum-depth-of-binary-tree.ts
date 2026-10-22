@@ -6,15 +6,15 @@ export function minDepth(root: TreeNode | null): number {
   if (!root) return 0;
 
   const queue: TreeNode[] = [root];
-  let front = 0;
+  let head = 0;
   let depth = 1;
 
-  while (front < queue.length) {
+  while (head < queue.length) {
     const levelEnd = queue.length;
 
-    while (front < levelEnd) {
-      const node = queue[front];
-      front += 1;
+    while (head < levelEnd) {
+      const node = queue[head];
+      head += 1;
 
       if (!node.left && !node.right) return depth;
 

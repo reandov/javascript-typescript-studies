@@ -32,7 +32,7 @@ This reasoning depends on ordering. The same movement is not valid on arbitrary 
 The read pointer inspects every element. The write pointer marks where the next kept value
 belongs. A useful invariant is:
 
-> The prefix before `write` contains exactly the accepted values seen before `read`.
+> The prefix before `writeIndex` contains exactly the accepted values seen before `readIndex`.
 
 ### Merging sorted streams
 
@@ -89,7 +89,7 @@ Remove `3` from `[3, 2, 2, 3, 4]`:
 | 4          | Write at 2 | [2, 2, 4]   |
 
 The return value is length `3`. Positions after that prefix are unspecified;
-the array itself is not shortened. `write` never passes `read`, so unread data
+the array itself is not shortened. `writeIndex` never passes `readIndex`, so unread data
 is safe. The merge lesson instead returns a new array: `[1, 4]` and `[2, 3]`
 produce `[1, 2, 3, 4]`, using O(n + m) output space.
 

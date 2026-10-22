@@ -1,24 +1,22 @@
 // Time complexity: O(n)
-// Space complexity: O(1)
+// Space complexity: O(n) for the normalized string
 export function isPalindrome(s: string): boolean {
   // We first need to normalize the input by removing everything beyond
   // letters and digits.
   const normalizedWord = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
 
-  // This is a two pointer solution so we have to initialize start at the
-  // beginning of the word and end at it's end (string indexes end at length - 1)
-  let start = 0;
-  let end = normalizedWord.length - 1;
+  // Compare characters from opposite ends of the normalized string.
+  let left = 0;
+  let right = normalizedWord.length - 1;
 
-  // While the pointers don't meet each other we need to
-  while (start < end) {
-    // Compare if the char at the end is different from the one at the end
-    // if they are we return false immediatelly
-    if (normalizedWord[start] !== normalizedWord[end]) return false;
+  // Stop once every opposing pair has been checked.
+  while (left < right) {
+    // A mismatched pair means the string is not a palindrome.
+    if (normalizedWord[left] !== normalizedWord[right]) return false;
 
-    // Move the start pointer forward and end pointer backwards
-    start++;
-    end--;
+    // Move both pointers inward.
+    left++;
+    right--;
   }
 
   // If no mismatching chars are found we return true

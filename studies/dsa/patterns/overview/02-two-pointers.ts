@@ -8,23 +8,23 @@
  * - avoid checking every pair.
  *
  * The invariant describes what lies outside the pointers. In compaction below,
- * values[0..write) already contains every kept value from values[0..read).
+ * values[0..writeIndex) already contains every kept value from values[0..readIndex).
  */
 
 export function compact<T>(values: T[], keep: (value: T) => boolean): number {
-  // The prefix before write contains exactly the accepted values read so far.
-  let write = 0;
+  // The prefix before writeIndex contains exactly the accepted values read so far.
+  let writeIndex = 0;
 
-  for (let read = 0; read < values.length; read++) {
-    if (keep(values[read])) {
+  for (let readIndex = 0; readIndex < values.length; readIndex++) {
+    if (keep(values[readIndex])) {
       // Compact toward the front without overwriting any unread value.
-      values[write] = values[read];
-      write += 1;
+      values[writeIndex] = values[readIndex];
+      writeIndex += 1;
     }
   }
 
   // Return the meaningful prefix length; callers should ignore the remaining tail.
-  return write;
+  return writeIndex;
 }
 
 export function hasPairWithSortedSum(values: number[], target: number): boolean {

@@ -30,15 +30,18 @@ export function summarize(root: TreeNode | null): Summary {
   }
 
   // Postorder supplies complete child summaries before computing the parent.
-  const left = summarize(root.left);
-  const right = summarize(root.right);
+  const leftSummary = summarize(root.left);
+  const rightSummary = summarize(root.right);
 
   return {
     // Count this node plus the longer downward path; height is measured in nodes.
-    height: 1 + Math.max(left.height, right.height),
+    height: 1 + Math.max(leftSummary.height, rightSummary.height),
     // Each subtree is disjoint, so add their totals and the current value once.
-    sum: root.value + left.sum + right.sum,
+    sum: root.value + leftSummary.sum + rightSummary.sum,
     // Balance must hold in both descendants and at this node.
-    balanced: left.balanced && right.balanced && Math.abs(left.height - right.height) <= 1,
+    balanced:
+      leftSummary.balanced &&
+      rightSummary.balanced &&
+      Math.abs(leftSummary.height - rightSummary.height) <= 1,
   };
 }

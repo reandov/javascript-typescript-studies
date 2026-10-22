@@ -3,25 +3,26 @@ import type { TreeNode } from "../../../data-structures/tree/array-to-tree/build
 // Time complexity: O(n), where n is the number of nodes
 // Space complexity: O(h), where h is the height of the tree
 export function getMinimumDifference(root: TreeNode | null): number {
-  let minDiff = Infinity;
-  let prev: TreeNode | null = null;
+  let minDifference = Infinity;
+  let previousNode: TreeNode | null = null;
 
-  function dfs(root: TreeNode | null): void {
-    if (!root) return;
+  // Visit BST values in sorted order using inorder DFS.
+  function dfs(node: TreeNode | null): void {
+    if (!node) return;
 
-    if (root.left) dfs(root.left);
+    if (node.left) dfs(node.left);
 
-    if (prev) {
-      const currentDiff = root.val - prev.val;
-      minDiff = Math.min(minDiff, currentDiff);
+    if (previousNode) {
+      const currentDifference = node.val - previousNode.val;
+      minDifference = Math.min(minDifference, currentDifference);
     }
 
-    prev = root;
+    previousNode = node;
 
-    if (root.right) dfs(root.right);
+    if (node.right) dfs(node.right);
   }
 
   dfs(root);
 
-  return minDiff;
+  return minDifference;
 }

@@ -7,16 +7,16 @@ export function wordPattern(pattern: string, s: string): boolean {
   const targetToSource = new Map<string, string>();
 
   // Since we're receiving all words in a string "s", we need to split it
-  const splittedSource = s.split(" ");
+  const words = s.split(" ");
 
-  // If the length of our pattern differs from splittedSource, we return
+  // If the length of our pattern differs from words, we return
   // false because they don't match
-  if (pattern.length !== splittedSource.length) return false;
+  if (pattern.length !== words.length) return false;
 
   // For every letter or our pattern we must do the following
   for (let index = 0; index < pattern.length; index++) {
     // Store a word and a letter from both inputs
-    const source = splittedSource[index];
+    const source = words[index];
     const target = pattern[index];
 
     // In this step we bidirectionally check if our source/target exists and has a value

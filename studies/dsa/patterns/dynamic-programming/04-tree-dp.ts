@@ -14,15 +14,15 @@ export interface TreeNode {
 export type Choice = readonly [take: number, skip: number];
 
 export function maximumIndependentTreeSum(root: TreeNode | null): number {
-  function solve(node: TreeNode | null): Choice {
+  function dfs(node: TreeNode | null): Choice {
     // An empty subtree contributes zero whether its root is taken or skipped.
     if (!node) {
       return [0, 0];
     }
 
     // Solve both child subtrees before deciding the current node's two states.
-    const [takeLeft, skipLeft] = solve(node.left);
-    const [takeRight, skipRight] = solve(node.right);
+    const [takeLeft, skipLeft] = dfs(node.left);
+    const [takeRight, skipRight] = dfs(node.right);
 
     // Selecting this node forbids selecting either immediate child.
     const takeNode = node.value + skipLeft + skipRight;
@@ -32,7 +32,7 @@ export function maximumIndependentTreeSum(root: TreeNode | null): number {
     return [takeNode, skipNode];
   }
 
-  const [takeRoot, skipRoot] = solve(root);
+  const [takeRoot, skipRoot] = dfs(root);
 
   // No parent constrains the overall root, so choose its better state.
   return Math.max(takeRoot, skipRoot);

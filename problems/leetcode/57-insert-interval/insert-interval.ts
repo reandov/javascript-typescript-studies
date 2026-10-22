@@ -6,13 +6,13 @@ export function insert(intervals: number[][], newInterval: number[]): number[][]
   intervals.push(newInterval);
   intervals.sort((a, b) => a[0] - b[0]);
 
-  const newIntervals: number[][] = [];
+  const mergedIntervals: number[][] = [];
   let start = intervals[0][0];
   let end = intervals[0][1];
 
   for (let index = 0; index < intervals.length - 1; index++) {
     if (end < intervals[index + 1][0]) {
-      newIntervals.push([start, end]);
+      mergedIntervals.push([start, end]);
 
       start = intervals[index + 1][0];
       end = intervals[index + 1][1];
@@ -28,7 +28,7 @@ export function insert(intervals: number[][], newInterval: number[]): number[][]
     }
   }
 
-  newIntervals.push([start, end]);
+  mergedIntervals.push([start, end]);
 
-  return newIntervals;
+  return mergedIntervals;
 }

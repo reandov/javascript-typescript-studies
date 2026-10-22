@@ -3,29 +3,29 @@
 export function isAnagram(s: string, t: string): boolean {
   if (s.length !== t.length) return false;
 
-  const counter = new Map<string, number>();
+  const counts = new Map<string, number>();
 
   for (const char of s) {
-    if (counter.has(char)) {
-      counter.set(char, (counter.get(char) || 0) + 1);
+    if (counts.has(char)) {
+      counts.set(char, (counts.get(char) || 0) + 1);
     } else {
-      counter.set(char, 1);
+      counts.set(char, 1);
     }
   }
 
   for (const char of t) {
-    if (counter.has(char)) {
-      counter.set(char, counter.get(char)! - 1);
+    if (counts.has(char)) {
+      counts.set(char, counts.get(char)! - 1);
 
-      if (counter.get(char) === 0) {
-        counter.delete(char);
+      if (counts.get(char) === 0) {
+        counts.delete(char);
       }
     } else {
       return false;
     }
   }
 
-  if (counter.size !== 0) {
+  if (counts.size !== 0) {
     return false;
   }
 

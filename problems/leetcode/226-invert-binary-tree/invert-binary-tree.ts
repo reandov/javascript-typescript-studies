@@ -6,31 +6,30 @@ export function invertTree(root: TreeNode | null): TreeNode | null {
   // If we don't have a root, return null
   if (!root) return null;
 
-  // "invertNodes" is basically a DFS algorithm where we apply a very know pattern
-  // of "inverting" values of two variables
-  function invertNodes(root: TreeNode | null): TreeNode | null {
-    if (!root) return null;
+  // Invert both subtrees with postorder DFS, then swap their roots.
+  function dfs(node: TreeNode | null): TreeNode | null {
+    if (!node) return null;
 
     // Invert all the left subtree
-    invertNodes(root.left);
+    dfs(node.left);
 
     // Invert all the right subtree
-    invertNodes(root.right);
+    dfs(node.right);
 
     // Variables to store old values from "left" and "right" nodes
-    let oldLeft = root.left;
-    let oldRight = root.right;
+    const oldLeft = node.left;
+    const oldRight = node.right;
 
     // Inverting left with oldRight
-    root.left = oldRight;
+    node.left = oldRight;
 
     // Inverting right with oldLeft
-    root.right = oldLeft;
+    node.right = oldLeft;
 
-    // Return the root of the tree so that other nodes can be inverted
-    return root;
+    // Return the root of this inverted subtree.
+    return node;
   }
 
   // Return the root of the tree with all of it's nodes inverted
-  return invertNodes(root);
+  return dfs(root);
 }

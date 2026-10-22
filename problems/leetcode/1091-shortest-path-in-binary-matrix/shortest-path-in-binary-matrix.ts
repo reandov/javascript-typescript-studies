@@ -6,10 +6,10 @@ export function shortestPathBinaryMatrix(grid: number[][]): number {
 
   // Store the dimensions once because every explored cell uses the same boundaries.
   const rows = grid.length;
-  const cols = grid[0].length;
+  const columns = grid[0].length;
 
   // Both endpoints must be clear for any path to exist.
-  if (grid[0][0] !== 0 || grid[rows - 1][cols - 1] !== 0) return -1;
+  if (grid[0][0] !== 0 || grid[rows - 1][columns - 1] !== 0) return -1;
 
   // BFS explores paths by increasing length, so the first path to the target is shortest.
   // Each queue entry stores the row, column, and number of cells visited so far.
@@ -37,19 +37,20 @@ export function shortestPathBinaryMatrix(grid: number[][]): number {
     const [row, column, pathLength] = queue[head++];
 
     // Reaching the bottom-right cell completes the shortest possible clear path.
-    if (row === rows - 1 && column === cols - 1) return pathLength;
+    if (row === rows - 1 && column === columns - 1) return pathLength;
 
     // Explore every cell connected to the current cell by an edge or corner.
     for (const [rowOffset, columnOffset] of directions) {
       const nextRow = row + rowOffset;
       const nextColumn = column + columnOffset;
 
-      const isInsideGrid = nextRow >= 0 && nextRow < rows && nextColumn >= 0 && nextColumn < cols;
+      const isInsideGrid =
+        nextRow >= 0 && nextRow < rows && nextColumn >= 0 && nextColumn < columns;
 
       // Only clear cells inside the matrix can belong to a path.
       if (!isInsideGrid || grid[nextRow][nextColumn] !== 0) continue;
 
-      const cellKey = nextRow * cols + nextColumn;
+      const cellKey = nextRow * columns + nextColumn;
       if (visited.has(cellKey)) continue;
 
       // Mark the cell when discovered so it cannot be added to the queue twice.

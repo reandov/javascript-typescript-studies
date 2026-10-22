@@ -4,28 +4,28 @@ import type { TreeNode } from "../../../data-structures/tree/array-to-tree/build
 // Space complexity: O(h), where h is the tree height (recursion depth)
 export function kthSmallest(root: TreeNode | null, k: number): number {
   // Count down the nodes still to visit before reaching the kth smallest.
-  let counter = k;
+  let remaining = k;
 
   // Placeholder for the answer; valid inputs guarantee a kth node exists.
-  let smallest = Infinity;
+  let kthValue = Infinity;
 
   // Inorder visits BST values in sorted order: left subtree, node, right subtree.
-  function inorder(root: TreeNode | null) {
-    if (!root) return;
+  function dfs(node: TreeNode | null) {
+    if (!node) return;
 
-    if (root.left) inorder(root.left);
+    if (node.left) dfs(node.left);
 
-    counter--;
+    remaining--;
 
     // Zero marks the kth node.
-    if (counter === 0) {
-      smallest = root.val;
+    if (remaining === 0) {
+      kthValue = node.val;
     }
 
-    if (root.right) inorder(root.right);
+    if (node.right) dfs(node.right);
   }
 
-  inorder(root);
+  dfs(root);
 
-  return smallest;
+  return kthValue;
 }

@@ -10,7 +10,7 @@ export function searchInsert(nums: number[], target: number): number {
   // Search while the interval still contains candidate elements.
   while (left <= right) {
     // Find the middle index of the remaining search interval.
-    let middle = left + Math.floor((right - left) / 2);
+    const middle = left + Math.floor((right - left) / 2);
 
     // Return the middle index if its value matches the target.
     if (nums[middle] === target) return middle;

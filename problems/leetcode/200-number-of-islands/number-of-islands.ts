@@ -6,7 +6,7 @@ export function numIslands(grid: string[][]): number {
 
   // Store the dimensions once because every traversal uses the same boundaries.
   const rows = grid.length;
-  const cols = grid[0].length;
+  const columns = grid[0].length;
 
   let islands = 0;
 
@@ -19,42 +19,43 @@ export function numIslands(grid: string[][]): number {
   ];
 
   // Visit and sink the entire island connected to the starting cell.
-  function bfs(startRow: number, startCol: number) {
+  function bfs(startRow: number, startColumn: number) {
     // The queue stores coordinates that still need to be explored.
-    const queue = [[startRow, startCol]];
+    const queue = [[startRow, startColumn]];
 
     // Advancing an index avoids the O(n) cost of removing the first queue item.
     let head = 0;
 
     // Mark land as visited by sinking it. This intentionally mutates the input grid.
-    grid[startRow][startCol] = "0";
+    grid[startRow][startColumn] = "0";
 
     while (head < queue.length) {
-      const [row, col] = queue[head++];
+      const [row, column] = queue[head++];
 
       // Check each orthogonal neighbor for unvisited land in the same island.
-      for (const [rowOffset, colOffset] of directions) {
+      for (const [rowOffset, columnOffset] of directions) {
         const nextRow = row + rowOffset;
-        const nextCol = col + colOffset;
+        const nextColumn = column + columnOffset;
 
-        const isInsideGrid = nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols;
+        const isInsideGrid =
+          nextRow >= 0 && nextRow < rows && nextColumn >= 0 && nextColumn < columns;
 
-        if (isInsideGrid && grid[nextRow][nextCol] === "1") {
+        if (isInsideGrid && grid[nextRow][nextColumn] === "1") {
           // Mark the neighbor when it is discovered so it cannot be queued twice.
-          grid[nextRow][nextCol] = "0";
+          grid[nextRow][nextColumn] = "0";
 
-          queue.push([nextRow, nextCol]);
+          queue.push([nextRow, nextColumn]);
         }
       }
     }
   }
 
   for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (grid[row][col] === "1") {
+    for (let column = 0; column < columns; column++) {
+      if (grid[row][column] === "1") {
         // Every remaining land cell begins a new island; BFS sinks all of it.
         islands++;
-        bfs(row, col);
+        bfs(row, column);
       }
     }
   }

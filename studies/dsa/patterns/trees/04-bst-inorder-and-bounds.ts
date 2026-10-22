@@ -17,18 +17,18 @@ export interface TreeNode {
 export function sortedValues(root: TreeNode | null): number[] {
   const values: number[] = [];
 
-  function inorder(node: TreeNode | null): void {
+  function dfs(node: TreeNode | null): void {
     if (!node) {
       return;
     }
 
-    inorder(node.left);
+    dfs(node.left);
     // Inorder places this value between the left and right subtree values.
     values.push(node.value);
-    inorder(node.right);
+    dfs(node.right);
   }
 
-  inorder(root);
+  dfs(root);
 
   return values;
 }

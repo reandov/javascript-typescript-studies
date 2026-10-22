@@ -7,14 +7,15 @@ export function preorderTraversal(root: TreeNode | null): number[] {
 
   const values: number[] = [];
 
-  function preorder(root: TreeNode) {
-    values.push(root.val);
+  // Collect values using preorder DFS: node, left subtree, right subtree.
+  function dfs(node: TreeNode) {
+    values.push(node.val);
 
-    if (root.left) preorder(root.left);
-    if (root.right) preorder(root.right);
+    if (node.left) dfs(node.left);
+    if (node.right) dfs(node.right);
   }
 
-  preorder(root);
+  dfs(root);
 
   return values;
 }

@@ -4,7 +4,7 @@ export function merge(intervals: number[][]): number[][] {
   // Sort intervals by their start value.
   intervals.sort((a, b) => a[0] - b[0]);
 
-  const fixedIntervals: number[][] = [];
+  const mergedIntervals: number[][] = [];
 
   // Start with the first interval.
   let start = intervals[0][0];
@@ -14,7 +14,7 @@ export function merge(intervals: number[][]): number[][] {
   for (let index = 0; index < intervals.length - 1; index++) {
     // If there is a gap, save the current interval.
     if (end < intervals[index + 1][0]) {
-      fixedIntervals.push([start, end]);
+      mergedIntervals.push([start, end]);
 
       // Start building a new interval.
       start = intervals[index + 1][0];
@@ -35,7 +35,7 @@ export function merge(intervals: number[][]): number[][] {
   }
 
   // Save the last interval after the loop.
-  fixedIntervals.push([start, end]);
+  mergedIntervals.push([start, end]);
 
-  return fixedIntervals;
+  return mergedIntervals;
 }

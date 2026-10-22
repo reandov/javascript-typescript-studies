@@ -18,18 +18,18 @@ export interface TreeNode {
 export function depthFirstValues(root: TreeNode): number[] {
   const values: number[] = [];
 
-  function visit(node: TreeNode): void {
+  function dfs(node: TreeNode): void {
     // Record on entry for preorder: visit the parent before any child.
     values.push(node.value);
 
     // Each child starts a smaller traversal; recursion finishes it before the next sibling.
     for (const child of node.children) {
-      visit(child);
+      dfs(child);
     }
   }
 
   // Start one traversal; all recursive calls append to the same result array.
-  visit(root);
+  dfs(root);
 
   return values;
 }

@@ -6,8 +6,9 @@ export function isSymmetric(root: TreeNode | null): boolean {
   // An empty tree mirrors itself.
   if (!root) return true;
 
+  // Check whether these two subtrees mirror each other using DFS.
   // left and right occupy corresponding positions in the mirrored subtrees.
-  function isMirror(left: TreeNode | null, right: TreeNode | null): boolean {
+  function dfs(left: TreeNode | null, right: TreeNode | null): boolean {
     // Two empty positions match.
     if (!left && !right) return true;
 
@@ -18,9 +19,9 @@ export function isSymmetric(root: TreeNode | null): boolean {
     if (left.val !== right.val) return false;
 
     // Compare outer children, then inner children only if the outer pair mirrors.
-    return isMirror(left.left, right.right) && isMirror(left.right, right.left);
+    return dfs(left.left, right.right) && dfs(left.right, right.left);
   }
 
   // Check whether the root's two subtrees mirror each other.
-  return isMirror(root.left, root.right);
+  return dfs(root.left, root.right);
 }

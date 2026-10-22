@@ -5,15 +5,15 @@ export function exist(board: string[][], word: string): boolean {
   if (board.length === 0 || board[0].length === 0) return false;
 
   const rows = board.length;
-  const cols = board[0].length;
+  const columns = board[0].length;
 
   // Each letter needs a distinct cell, so the board must have enough cells.
-  if (word.length > rows * cols) return false;
+  if (word.length > rows * columns) return false;
 
   // Match word[wordIndex] here, then search for the remaining letters.
   function dfs(row: number, column: number, wordIndex: number): boolean {
     // Check boundaries before reading a cell from the board.
-    if (row < 0 || row >= rows || column < 0 || column >= cols) return false;
+    if (row < 0 || row >= rows || column < 0 || column >= columns) return false;
 
     // Reject reused cells and letters that do not match the expected position.
     if (board[row][column] !== word[wordIndex]) return false;
@@ -39,8 +39,8 @@ export function exist(board: string[][], word: string): boolean {
 
   // Any cell can be the first letter, so try every starting position.
   for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (dfs(row, col, 0)) return true;
+    for (let column = 0; column < columns; column++) {
+      if (dfs(row, column, 0)) return true;
     }
   }
 

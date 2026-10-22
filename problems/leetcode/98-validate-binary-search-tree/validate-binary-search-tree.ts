@@ -4,7 +4,7 @@ import type { TreeNode } from "../../../data-structures/tree/array-to-tree/build
 // Space complexity: O(h), where h is the tree height (recursion depth)
 export function isValidBST(root: TreeNode | null): boolean {
   // Each node must stay within the exclusive bounds imposed by all its ancestors.
-  function validate(node: TreeNode | null, lowerBound: number, upperBound: number): boolean {
+  function dfs(node: TreeNode | null, lowerBound: number, upperBound: number): boolean {
     // An empty subtree is valid.
     if (node === null) return true;
 
@@ -12,8 +12,8 @@ export function isValidBST(root: TreeNode | null): boolean {
     if (node.val <= lowerBound || node.val >= upperBound) return false;
 
     // Tighten the left upper bound and right lower bound, preserving ancestor bounds.
-    return validate(node.left, lowerBound, node.val) && validate(node.right, node.val, upperBound);
+    return dfs(node.left, lowerBound, node.val) && dfs(node.right, node.val, upperBound);
   }
 
-  return validate(root, -Infinity, Infinity);
+  return dfs(root, -Infinity, Infinity);
 }

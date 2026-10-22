@@ -7,14 +7,15 @@ export function postorderTraversal(root: TreeNode | null): number[] {
 
   const values: number[] = [];
 
-  function postorder(root: TreeNode) {
-    if (root.left) postorder(root.left);
-    if (root.right) postorder(root.right);
+  // Collect values using postorder DFS: left subtree, right subtree, node.
+  function dfs(node: TreeNode) {
+    if (node.left) dfs(node.left);
+    if (node.right) dfs(node.right);
 
-    values.push(root.val);
+    values.push(node.val);
   }
 
-  postorder(root);
+  dfs(root);
 
   return values;
 }

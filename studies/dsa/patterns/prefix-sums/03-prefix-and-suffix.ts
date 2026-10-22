@@ -3,22 +3,22 @@
 export function productsExceptSelf(values: readonly number[]): number[] {
   const products = Array<number>(values.length).fill(1);
 
-  let productToLeft = 1;
+  let prefixProduct = 1;
 
   for (let index = 0; index < values.length; index++) {
     // Save the product strictly before this index, excluding the value itself.
-    products[index] = productToLeft;
+    products[index] = prefixProduct;
     // Include the current value only for the next index's left contribution.
-    productToLeft *= values[index];
+    prefixProduct *= values[index];
   }
 
-  let productToRight = 1;
+  let suffixProduct = 1;
 
   for (let index = values.length - 1; index >= 0; index--) {
     // Combine the saved left contribution with the product strictly to the right.
-    products[index] *= productToRight;
+    products[index] *= suffixProduct;
     // Prepare the right contribution for the next index visited backward.
-    productToRight *= values[index];
+    suffixProduct *= values[index];
   }
 
   return products;

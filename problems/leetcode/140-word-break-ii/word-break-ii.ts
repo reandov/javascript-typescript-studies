@@ -1,12 +1,12 @@
 // Time complexity: O(n^3 * d + a), where n is s.length, d is wordDict.length, and a is the total size of all returned sentences
-// Space complexity: O(n + a), for the recursion stack, cache, and generated sentences
+// Space complexity: O(n + a), for the recursion stack, memo, and generated sentences
 export function wordBreak(s: string, wordDict: string[]): string[] {
-  const cache = new Map<number, string[]>();
+  const memo = new Map<number, string[]>();
 
   function dfs(currentIndex: number) {
     if (currentIndex === s.length) return [""];
 
-    if (cache.has(currentIndex)) return cache.get(currentIndex) ?? [];
+    if (memo.has(currentIndex)) return memo.get(currentIndex) ?? [];
 
     const validSentences: string[] = [];
 
@@ -26,7 +26,7 @@ export function wordBreak(s: string, wordDict: string[]): string[] {
       }
     }
 
-    cache.set(currentIndex, validSentences);
+    memo.set(currentIndex, validSentences);
 
     return validSentences;
   }

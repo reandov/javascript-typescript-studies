@@ -5,12 +5,12 @@ export function removeDuplicates(nums: number[]): number {
   let writeIndex = 1;
 
   // For every element inside nums array
-  for (let index = 1; index < nums.length; index++) {
+  for (let readIndex = 1; readIndex < nums.length; readIndex++) {
     // Check if current is NOT equal to the previous element
-    if (nums[index] !== nums[writeIndex - 1]) {
+    if (nums[readIndex] !== nums[writeIndex - 1]) {
       // If condition is true (they're different) we shift the current index
       // to the writeIndex
-      nums[writeIndex] = nums[index];
+      nums[writeIndex] = nums[readIndex];
 
       // And move the pointer forward
       writeIndex += 1;

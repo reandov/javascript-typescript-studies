@@ -1,7 +1,7 @@
 /**
  * TREE TRAVERSAL ORDERS
  *
- * The position of "visit" relative to the recursive calls defines the traversal.
+ * The position of node processing relative to the recursive calls defines the traversal.
  * Ask when the node itself should be processed: before, between, or after its children?
  */
 
@@ -20,7 +20,7 @@ export function traversalOrders(root: TreeNode | null): {
   const inorder: string[] = [];
   const postorder: string[] = [];
 
-  function traverse(node: TreeNode | null): void {
+  function dfs(node: TreeNode | null): void {
     // A missing subtree contributes no values to any traversal.
     if (!node) {
       return;
@@ -28,15 +28,15 @@ export function traversalOrders(root: TreeNode | null): {
 
     // Record on entry, before either subtree has been visited.
     preorder.push(node.value);
-    traverse(node.left);
+    dfs(node.left);
     // The left subtree is complete; record between the two recursive calls.
     inorder.push(node.value);
-    traverse(node.right);
+    dfs(node.right);
     // Both subtrees are complete, so the parent is recorded last.
     postorder.push(node.value);
   }
 
-  traverse(root);
+  dfs(root);
 
   return { preorder, inorder, postorder };
 }
