@@ -1,0 +1,4 @@
+interface:
+  display_name: "Comment Code"
+  short_description: "Teach code through concise step-by-step comments"
+  default_prompt: "Use $comment-code to add or improve concise teaching comments throughout the selected implementation while preserving its behavior."
